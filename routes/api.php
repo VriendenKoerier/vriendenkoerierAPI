@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('packages', 'PackageController@index');
+Route::get('package/{id}', 'PackageController@show');
+Route::post('package', 'PackageController@store');
+Route::put('package', 'PackageController@store');
+Route::delete('package/{id}', 'PackageController@destroy');
