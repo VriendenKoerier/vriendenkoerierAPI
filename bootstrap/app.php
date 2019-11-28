@@ -52,4 +52,8 @@ $app->singleton(
 |
 */
 
+header('Acces-Control-Allow-Origin: *');
+header('Acces-Control-Allow-Methods: *');
+header('Acces-Control-Allow-Headers: *');
+
 return $app;
