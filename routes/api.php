@@ -17,13 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('package', 'PackageController@store');
+Route::put('package', 'PackageController@store');
+Route::delete('package/{id}', 'PackageController@destroy');
+Route::get('package/{id}', 'PackageController@show');
+Route::get('packages', 'PackageController@index');
+
 Route::group(['middleware' => 'auth:api'], function()
 {
-    Route::post('package', 'PackageController@store');
-    Route::put('package', 'PackageController@store');
-    Route::delete('package/{id}', 'PackageController@destroy');
-    Route::get('package/{id}', 'PackageController@show');
-    Route::get('packages', 'PackageController@index');
+
 });
 
 //Authentication fix
