@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Package;
 use App\Http\Resources\Package as PackageResource;
+use App\Exceptions\Handler;
 
 class PackageController extends Controller
 {
@@ -17,7 +18,6 @@ class PackageController extends Controller
     public function index()
     {
         $packages = Package::paginate(15);
-
         return PackageResource::collection($packages);
     }
 
@@ -70,8 +70,16 @@ class PackageController extends Controller
      */
     public function show($id)
     {
-        $package = Package::findOrFail($id);
-        return new PackageResource($package);
+        try
+        {
+            $package = Package::findOrFail($id);
+            return new PackageResource($package);
+        }
+        catch (Exception $error)
+        {
+            report($error);
+            return response()->json(['message' => $error], 500);
+        }
     }
 
     /**
@@ -82,7 +90,7 @@ class PackageController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**

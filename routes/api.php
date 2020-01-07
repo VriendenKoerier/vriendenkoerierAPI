@@ -17,15 +17,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('package', 'PackageController@store');
-Route::put('package', 'PackageController@store');
-Route::delete('package/{id}', 'PackageController@destroy');
-Route::get('package/{id}', 'PackageController@show');
-Route::get('packages', 'PackageController@index');
+Route::get('package/{id}', 'PacketController@show');
+Route::get('packages/{pagesize}', 'PacketController@index');
+Route::get('package/accept/{id}', 'PacketController@AcceptedUrl')->name('accept');
+Route::get('package/deny/{id}', 'PacketController@DeniedUrl')->name('deny');
 
 Route::group(['middleware' => 'auth:api'], function()
 {
-
+    Route::put('package', 'PacketController@store');
+    Route::delete('package/{id}', 'PacketController@destroy');
+    Route::post('package', 'PacketController@store');
+    Route::get('packages/user/{pagesize}', 'PacketController@userPackets');
+    Route::get('package/user/{id}', 'PacketController@userInfo');
+    Route::patch('package/invite', 'PacketController@sendInvite');
 });
 
 //Authentication fix
