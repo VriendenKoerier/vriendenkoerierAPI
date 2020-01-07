@@ -204,7 +204,7 @@ class PacketController extends Controller
             $secretData = [
                 "contact" => $packet->contact,
                 "adres_a" => $packet->adres_a,
-                "adres_b" => $packet->adres_b,
+                "adres_b" => $packet->aders_b,
                 "postcode_a" => $packet->postcode_a,
                 "postcode_b" => $packet->postcode_b,
             ];
@@ -303,7 +303,7 @@ class PacketController extends Controller
                 $packet->postcode_a = $postA;
                 $packet->postcode_b = $postB;
                 $packet->adres_a = $request->input('adres_a');
-                $packet->adres_b = $request->input('adres_b');
+                $packet->aders_b = $request->input('adres_b');
                 $packet->avg_confirmed = $request->input('avg_confirmed');
                 $packet->show_hash = "notset";
                 $packet->deny_hash = "notset";
