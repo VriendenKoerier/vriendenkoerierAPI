@@ -28,7 +28,7 @@ class CreatePacketsTable extends Migration
             $table->string('postcode_a', 7);
             $table->string('postcode_b', 7);
             $table->string('adres_a', 65);
-            $table->string('aders_b', 65);
+            $table->string('adres_b', 65);
             $table->boolean('avg_confirmed');
             $table->string('show_hash')->nullable();
             $table->string('deny_hash')->nullable();
