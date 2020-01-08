@@ -247,7 +247,7 @@ class PacketController extends Controller
         return [
             "title" => $request->title,
             'description' => $request->description,
-            'height' => $request->data->height,
+            'height' => $request->height,
             'width' => $request->input('width'),
             'length' => $request->input('length'),
             'weight' => $request->input('weight'),
