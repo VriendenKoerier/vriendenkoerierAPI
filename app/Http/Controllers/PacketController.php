@@ -288,7 +288,7 @@ class PacketController extends Controller
                 'width' => 'required|integer',
                 'length' => 'required|integer',
                 'weight' => 'required|integer',
-                'photo' => 'required|image|mimes:jpeg,png,jpg,giv,svg|max:5048',
+                // 'photo' => 'required|image|mimes:jpeg,png,jpg,giv,svg|max:5048',
                 'contact' => 'required|max:255',
                 'postcode_a' => 'required|string|min:6|max:7',
                 'postcode_b' => 'required|string|min:6|max:7',
@@ -298,7 +298,7 @@ class PacketController extends Controller
             ]);
 
             //image naam
-            $imageName = time().$user_id.'.'.$request->photo->extension();
+            //$imageName = time().$user_id.'.'.$request->photo->extension();
 
             //image opslaan
             if($request->photo->move(public_path('images'), $imageName))
@@ -315,7 +315,8 @@ class PacketController extends Controller
                 $packet->width = $request->input('width');
                 $packet->length = $request->input('length');
                 $packet->weight = $request->input('weight');
-                $packet->photo = $imageName;
+               // $packet->photo = $imageName;
+                $packet->photo = "photoNaam";
                 $packet->contact = $request->input('contact');
                 $packet->postcode_a = $postA;
                 $packet->postcode_b = $postB;
