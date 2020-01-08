@@ -317,7 +317,6 @@ class PacketController extends Controller
                 $packet->length = $request->input('length');
                 $packet->weight = $request->input('weight');
                 $packet->photo = $imageName;
-                $packet->photo = "photoNaam";
                 $packet->contact = $request->input('contact');
                 $packet->postcode_a = $postA;
                 $packet->postcode_b = $postB;
