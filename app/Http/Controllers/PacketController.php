@@ -244,7 +244,21 @@ class PacketController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        return [
+            "title" => $request->input('title'),
+            'description' => $request->input('description'),
+            'height' => $request->input('height'),
+            'width' => $request->input('width'),
+            'length' => $request->input('length'),
+            'weight' => $request->input('weight'),
+            'photo' => $request->input('photo'),
+            'contact' => $request->input('contact'),
+            'postcode_a' => $request->input('postcode_a'),
+            'postcode_b' => $request->input('postcode_b'),
+            'adres_a' => $request->input('adres_a'),
+            'adres_b' => $request->input('adres_b'),
+            'avg_confirmed' => $request->input('avg_confirmed'),
+        ];
 
         try
         {
