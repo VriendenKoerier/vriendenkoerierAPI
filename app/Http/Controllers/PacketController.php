@@ -244,22 +244,22 @@ class PacketController extends Controller
      */
     public function store(Request $request)
     {
-        return [
-            "title" => $request->title,
-            'description' => $request->description,
-            'height' => $request->height,
-            'width' => $request->input('width'),
-            'length' => $request->input('length'),
-            'weight' => $request->input('weight'),
-            'photo' => $request->input('photo'),
-            'contact' => $request->input('contact'),
-            'postcode_a' => $request->input('postcode_a'),
-            'postcode_b' => $request->input('postcode_b'),
-            'adres_a' => $request->input('adres_a'),
-            'adres_b' => $request->input('adres_b'),
-            'avg_confirmed' => $request->input('avg_confirmed'),
-            'WHOLE ARRAY' => $request->all()
-        ];
+        // return [
+        //     "title" => $request->title,
+        //     'description' => $request->description,
+        //     'height' => $request->height,
+        //     'width' => $request->input('width'),
+        //     'length' => $request->input('length'),
+        //     'weight' => $request->input('weight'),
+        //     'photo' => $request->input('photo'),
+        //     'contact' => $request->input('contact'),
+        //     'postcode_a' => $request->input('postcode_a'),
+        //     'postcode_b' => $request->input('postcode_b'),
+        //     'adres_a' => $request->input('adres_a'),
+        //     'adres_b' => $request->input('adres_b'),
+        //     'avg_confirmed' => $request->input('avg_confirmed'),
+        //     'WHOLE ARRAY' => $request->all()
+        // ];
 
         try
         {
