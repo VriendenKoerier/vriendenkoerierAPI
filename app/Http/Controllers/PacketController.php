@@ -245,7 +245,7 @@ class PacketController extends Controller
     public function store(Request $request)
     {
         return [
-            "title" => $request->data->input('title'),
+            "title" => $request->title,
             'description' => $request->description,
             'height' => $request->data->height,
             'width' => $request->input('width'),
