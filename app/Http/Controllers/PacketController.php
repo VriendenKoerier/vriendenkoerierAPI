@@ -271,7 +271,7 @@ class PacketController extends Controller
                 'width' => 'required|integer',
                 'length' => 'required|integer',
                 'weight' => 'required|integer',
-                'photo' => 'required|image|mimes:jpeg,png,jpg,giv,svg|max:2048',
+                'photo' => 'required|image|mimes:jpeg,png,jpg,giv,svg|max:5048',
                 'contact' => 'required|max:255',
                 'postcode_a' => 'required|string|min:6|max:7',
                 'postcode_b' => 'required|string|min:6|max:7',
