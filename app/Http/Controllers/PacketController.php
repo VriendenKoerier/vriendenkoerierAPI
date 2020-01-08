@@ -244,6 +244,8 @@ class PacketController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
+
         try
         {
             $user_id = $request->user()->id;
