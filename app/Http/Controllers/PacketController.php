@@ -258,6 +258,7 @@ class PacketController extends Controller
             'adres_a' => $request->input('adres_a'),
             'adres_b' => $request->input('adres_b'),
             'avg_confirmed' => $request->input('avg_confirmed'),
+            'WHOLE ARRAY' => $request->all()
         ];
 
         try
