@@ -298,9 +298,8 @@ class PacketController extends Controller
             ]);
 
             //image naam
-            $imageName = time().$user_id.'.'.$request->photo->extension();
-
-            return $imageName;
+            //$imageName = time().$user_id.'.'.$request->photo->extension();
+            return $request->photo;
 
             //image opslaan
             if(/*$request->photo->move(public_path('images'), $imageName)*/true)
