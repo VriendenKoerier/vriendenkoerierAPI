@@ -298,11 +298,11 @@ class PacketController extends Controller
             ]);
 
             //image naam
-            //$imageName = time().$user_id.'.'.$request->photo->extension();
-            return $request->photo;
+            $imageName = time().$user_id.'.'.$request->photo->extension();
+            //return $imageName;
 
             //image opslaan
-            if(/*$request->photo->move(public_path('images'), $imageName)*/true)
+            if($request->photo->move(public_path('images'), $imageName))
             {
                 //spaties, white spaces, tabs etc allemaal weghalen (dit werkte eerste en nu niet meer, fck me)
                 $postA = preg_replace('~\x{00a0}~','',$request->input('postcode_a'));
