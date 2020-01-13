@@ -109,6 +109,7 @@ class PacketController extends Controller
                 return response()->json(['message' => "Oops something went wrong."], 404);
             }
 
+            $packetTitle = Packet::where("id", $packetId)->get('title');
             $sendEmail = User::where('id', $packetOwnerId)->get('email');
             $signedRoute = URL::signedRoute('accept', ['id' => $userId.'-'.time()]);
             $deniedRoute = URL::signedRoute('deny', ['id' => $userId.'-'.time().'deny']);
@@ -118,20 +119,30 @@ class PacketController extends Controller
                 "deny_hash" => $deniedRoute,
             ]);
 
-            return [
-                "packetOwnerID" => $packetOwnerId,
-                "packetId" => $packetId,
-                "inviteMessage" => $inviteMessage,
-                "userId" => $userId,
-                "userName" => $userName,
-                "email" => $sendEmail[0]->email,
-                "signedRoute" => $signedRoute,
-                "deniedRoute" => $deniedRoute,
-                "packet" => $packet,
-                "request" => $request
-            ];
+            //mail versturen
+            $data = ['nameKoerier' => $userName, 'title' => $packetTitle[0]->title, 'bodyMessage' => $inviteMessage, 'acceptRoute' => $signedRoute, 'denyRoute' => $deniedRoute];
+            Mail::send('mailinvite', $data, function ($message) use($sendEmail)
+            {
+                $message->from('automail@vriendenkoerier.nl', 'Vrienden Koerier');
+                $message->subject('Pakket koerier uitnodiging');
+                $message->to($sendEmail[0]->email);
+            });
 
-            //TODO: mail sturen
+            // return [
+            //     //"packetOwnerID" => $packetOwnerId,
+            //     //"packetId" => $packetId,
+            //     //"packetTitel" => $packetTitle,
+            //     //"inviteMessage" => $inviteMessage,
+            //     //"userId" => $userId,
+            //     //"userName" => $userName,
+            //     //"email" => $sendEmail[0]->email,
+            //     //"signedRoute" => $signedRoute,
+            //     //"deniedRoute" => $deniedRoute,
+            //     //"packet" => $packet,
+            //     //"request" => $request
+            // ];
+
+            return response()->json(['message' => "Uitnodiging is verstuurd."], 200);
 
         }
         catch (Exception $error)
@@ -153,6 +164,7 @@ class PacketController extends Controller
             $trimId = explode('-', $id)[0];
 
             $packet = Packet::where('deny_hash', $request->fullUrl())->first();
+            $packetTitle = $packet->title;
 
             if(!$packet)
             {
@@ -166,12 +178,25 @@ class PacketController extends Controller
                 "deny_hash" => "notset",
             ]);
 
-            return [
-                "emailTo" => $sendEmailUserData->email,
-                "name" => $sendEmailUserData->name,
+            // return [
+            //     "emailTo" => $sendEmailUserData->email,
+            //     "name" => $sendEmailUserData->name,
+            // ];
+
+            //mail versturen
+            $data = [
+                'name' => $sendEmailUserData->name,
+                'title' => $packetTitle,
             ];
 
-             //Mail hier
+            Mail::send('maildeny', $data, function ($message) use($sendEmailUserData)
+            {
+                $message->from('automail@vriendenkoerier.nl', 'Vrienden Koerier');
+                $message->subject('Pakket vervoeren geweigerd');
+                $message->to($sendEmailUserData->email);
+            });
+
+            return response()->json(['message' => "Koerier is geweigerd."], 200);
 
         }
         catch (Exception $error)
@@ -207,6 +232,7 @@ class PacketController extends Controller
                 "adres_b" => $packet->aders_b,
                 "postcode_a" => $packet->postcode_a,
                 "postcode_b" => $packet->postcode_b,
+                "title" => $packet->title,
             ];
 
             $packet = Packet::where('show_hash', $request->fullUrl())->update([
@@ -215,17 +241,35 @@ class PacketController extends Controller
                 "deny_hash" => "notset",
             ]);
 
-            return [
-                "emailTo" => $sendEmailUserData->email,
-                "name" => $sendEmailUserData->name,
-                "contact" => $secretData['contact'],
-                "straat A" => $secretData['adres_a'],
-                "postcode A" => $secretData['postcode_a'],
-                "straat B" => $secretData['adres_b'],
-                "postcode B" => $secretData['postcode_b'],
+            // return [
+            //     "emailTo" => $sendEmailUserData->email,
+            //     "name" => $sendEmailUserData->name,
+            //     "contact" => $secretData['contact'],
+            //     "straat A" => $secretData['adres_a'],
+            //     "postcode A" => $secretData['postcode_a'],
+            //     "straat B" => $secretData['adres_b'],
+            //     "postcode B" => $secretData['postcode_b'],
+            // ];
+
+            //mail versturen
+            $data = [
+                'name' => $sendEmailUserData->name,
+                'title' => $secretData['title'],
+                'contact' => $secretData['contact'],
+                'adresA' => $secretData['adres_a'],
+                'postcodeA' => $secretData['postcode_a'],
+                'adresB' => $secretData['adres_b'],
+                'postcodeB' => $secretData['postcode_b']
             ];
 
-             //Mail hier
+            Mail::send('mailaccept', $data, function ($message) use($sendEmailUserData)
+            {
+                $message->from('automail@vriendenkoerier.nl', 'Vrienden Koerier');
+                $message->subject('Pakket vervoeren geaccepteerd');
+                $message->to($sendEmailUserData->email);
+            });
+
+            return response()->json(['message' => "Koerier is geaccepteerd."], 200);
         }
         catch (Exception $error)
         {
