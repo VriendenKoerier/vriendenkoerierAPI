@@ -93,9 +93,14 @@ class PacketController extends Controller
     {
         try
         {
+            $dataArray = [
+                "id" => $request->id,
+                "user_id" => $request->user_id,
+                "message" => $request->message,
+            ];
             //CHECKEN OF IDS NIET HETZELFDE ZIJN ZODAT JE NIET JEZELF KAN BEZORGEN
+            return response()->json($dataArray, 200);
 
-            return $request->message;
             $packetOwnerId = $request->input('user_id');
             $packetId = $request->input('id');
             $inviteMessage = $request->input('message');
