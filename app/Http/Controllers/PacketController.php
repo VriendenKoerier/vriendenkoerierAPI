@@ -95,7 +95,7 @@ class PacketController extends Controller
         {
             //CHECKEN OF IDS NIET HETZELFDE ZIJN ZODAT JE NIET JEZELF KAN BEZORGEN
 
-            return $request;
+            return $request->message;
             $packetOwnerId = $request->input('user_id');
             $packetId = $request->input('id');
             $inviteMessage = $request->input('message');
