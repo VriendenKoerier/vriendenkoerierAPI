@@ -98,7 +98,7 @@ class PacketController extends Controller
             //     "user_id" => $request->user_id,
             //     "message" => $request->message,
             // ];
-            // //CHECKEN OF IDS NIET HETZELFDE ZIJN ZODAT JE NIET JEZELF KAN BEZORGEN
+
             // return response()->json($dataArray, 200);
 
             $packetOwnerId = $request->input('user_id');
@@ -107,6 +107,11 @@ class PacketController extends Controller
 
             $userId = $request->user()->id;
             $userName = $request->user()->name;
+
+            if($userId == $packetOwnerId)
+            {
+                return response()->json(['message' => "Oops something went wrong."], 404);
+            }
 
             $packetHash = Packet::where("id", $packetId)->get('show_hash');
 
@@ -430,12 +435,12 @@ class PacketController extends Controller
             $packet = Packet::findOrFail($id);
             $user_id = Auth::user()->id;
 
-            if($packet->user_id != $user_id)
-            {
-                return response()->json(['message' => 'Package not found.'], 404);
-            }
-            else
-            {
+            // if($packet->user_id != $user_id)
+            // {
+            //     return response()->json(['message' => 'Package not found.'], 404);
+            // }
+            // else
+            // {
                 if($packet->delete())
                 {
                     return new PacketResource($packet);
@@ -444,7 +449,7 @@ class PacketController extends Controller
                 {
                     return response()->json(['message' => 'Oops something went wrong.'], 500);
                 }
-            }
+            //}
         }
         catch (Exception $error)
         {
