@@ -435,12 +435,12 @@ class PacketController extends Controller
             $packet = Packet::findOrFail($id);
             $user_id = Auth::user()->id;
 
-            // if($packet->user_id != $user_id)
-            // {
-            //     return response()->json(['message' => 'Package not found.'], 404);
-            // }
-            // else
-            // {
+            if($packet->user_id != $user_id)
+            {
+                return response()->json(['message' => 'Package not found.'], 404);
+            }
+            else
+            {
                 if($packet->delete())
                 {
                     return new PacketResource($packet);
